@@ -1,3 +1,73 @@
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDG02RhsyYpTkyLeBFxk6xMlH8pq3sPUXU",
+        authDomain: "trainscheduler-app.firebaseapp.com",
+        databaseURL: "https://trainscheduler-app.firebaseio.com",
+        projectId: "trainscheduler-app",
+        storageBucket: "trainscheduler-app.appspot.com",
+        messagingSenderId: "823077281269"
+    };
+    firebase.initializeApp(config);
+
+    // Create a variable to reference the database
+    var database = firebase.database();
+
+    // Initial Variables (SET the first set IN FIREBASE FIRST)
+    // Note remember to create these same variables in Firebase!
+
+        // Create an initial employeeCount variable
+    var trainCount = 0;
+    var trainArray = JSON.parse(localStorage.getItem("trainList"));   
+
+    // Click Button changes what is stored in firebase
+    $("#add-train-btn").on("click", function(event) {
+        // Prevent the page from refreshing
+        event.preventDefault();
+
+        // Grabs train input
+        var trainName = $("#train-input").val().trim();
+        var trainDest = $("#dest-input").val().trim();
+        var trainTime = $("#time-input").val().trim();
+        var trainFrec = $("#frec-input").val().trim();
+        
+
+        // Creates local "temporary" object for holding employee data
+        var newTrain = {
+            name: trainName,
+            dest: trainDest,
+            time: trainTime,
+            frec: trainFrec
+           
+        };
+
+        // Uploads employee data to the database
+        database.ref().push(newTrain);
+
+        // Logs everything to console
+        console.log(newTrain.name);
+        console.log(newTrain.dest);
+        console.log(newTrain.time);
+        console.log(newTrain.frec);
+        
+
+        alert("Train successfully added");
+
+        // Clears all of the text-boxes
+        $("#train-input").val("");
+        $("#dest-input").val("");
+        $("#time-input").val("");
+        $("#frec-input").val("");
+        
+
+        // var tableRow = $("<tr>").append(
+        // $("<td>").text(tempTrain),
+        // $("<td>").text(tempDest),
+        // $("<td>").text(tempFrec),
+        // $("<td>").text(tempNext),
+        // $("<td>").text(tempMin)
+        // );
+    });
+
 // Assume the following situations.
 
     // (TEST 1)

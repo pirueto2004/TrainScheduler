@@ -3,10 +3,11 @@
 <html lang="en-us">
 
 <head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <meta charset="UTF-8">
-
-  <title>Example of Time Telling</title>
+  <title>Train Scheduler App</title>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -20,6 +21,130 @@
 </head>
 
 <body>
+
+        <div class="container">
+                <div class="jumbotron jumbotron-fluid text-center mt-3" style="background-color: rgb(172, 41, 41);">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                 <h2 class="display-4 font-weight-bold text-white">Any Time is Train Time</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                 <h4 class="font-weight-bold text-white"> Choo Choo. Chee Chee</h4>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                  <div class="row">
+                      <div class="col-12 mb-3">
+                          <div class="card border-primary">
+                              <div class="card-header bg-primary">
+                                  <h5 class="card-title  text-white">Current Train Schedule</h5>  
+                              </div>
+                              <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                      <tr>
+                                        
+                                        <th scope="col" id="nameCol">Train Name</th>
+                                        <th scope="col" id="destCol">Destination</th>
+                                        <th scope="col" id="frecCol">Frecuency (min)</th>
+                                        <th scope="col" id="nextCol">Next Arrival</th>
+                                        <th scope="col" id="minCol">Minutes Away</th>
+                                        
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        
+                                        <td>Brightline</td>
+                                        <td>West Palm Beach</td>
+                                        <td>30</td>
+                                        <td>05:35 PM</td>
+                                        <td>10</td> 
+                                      </tr>
+                                      <tr>
+                                        
+                                        <td>Matrorail</td>
+                                        <td>Dadeland South</td>
+                                        <td>30</td>
+                                        <td>05:35 PM</td>
+                                        <td>10</td>
+                                      </tr>
+                                      <tr>
+                                        
+                                        <td>Tri Rail</td>
+                                        <td>Miami Airport</td>
+                                        <td>30</td>
+                                        <td>05:35 PM</td>
+                                        <td>10</td>
+                                      </tr>
+                                      <tr>
+                                        
+                                        <td>Amtrak</td>
+                                        <td>Orlando</td>
+                                        <td>30</td>
+                                        <td>05:35 PM</td>
+                                        <td>10</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </div>
+                              
+                          </div>
+                      </div>
+                      <div class="col-12">
+                            <div class="card border-primary">
+                                    <div class="card-header bg-primary">
+                                        <h5 class="card-title text-white">Add Train</h5>  
+                                    </div>
+                                    <div class="card-body">    
+                                        <form class="form">
+                                            <div class="form-group">
+                                                    <label for="train-input">Train Name</label>
+                                                    <input type="text" class="form-control" id="train-input" placeholder="Yellow Line">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="my-1 mr-2" for="dest-input">Destination</label>
+                                                <input type="text" class="form-control" id="dest-input" placeholder="Atlanta">
+                                            </div>
+                                            <div class="form-group">
+                                                    <label for="time-input">First Time Train (HH:mm-military time)</label>
+                                                    <input type="text" class="form-control" id="time-input" placeholder="21:00">
+                                            </div>
+                                            <div class="form-group">
+                                                    <label for="frec-input">Frecuency (min)</label>
+                                                    <input type="text" class="form-control" id="frec-input" placeholder="20">
+                                            </div>
+                                                
+                                                <input class="btn btn-primary float-right" type="submit" id="add-train-btn" value="Submit"                       
+                                                                                    
+                                        </form>
+                                   </div>
+                                    
+                        </div>
+                                    <!-- Most Recent Member Card -->
+                        <div class="col-lg-6">
+                            <div class="card">
+                            <div class="card-header">
+                                Most Recent Member
+                            </div>
+                            <div class="card-body" id="recent-member">
+                                <h2 id="name-display">Jimmy John</h2>
+                                <h4 id="role-display">Email: jimmy@john.edu</h4>
+                                <h4 id="start-display">Age: 27</h4>
+                                <p id="rate">I'm signing up, because I want to spread sandwiches to the world.</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+            
 
   <!-- Script -->
   <!-- Javascript file -->
