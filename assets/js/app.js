@@ -1,3 +1,20 @@
+function setBackgroundImage(myObject, imageUrl) {
+    myObject.css({
+                 "background-image": "url(" + imageUrl + ")",
+                 "background-position": "left",
+                 "background-size": "50%"
+                //  "background-size": "100% 300%"
+                 });
+  }
+
+//   var body = $("body");
+//   var imageUrl = 'assets/images/bg-blue.jpg';
+//   setBackgroundImage(body, imageUrl);
+
+  var jumbotron = $(".jumbotron");
+  var imageUrl = 'assets/images/high-speed-train.jpg';
+  setBackgroundImage(jumbotron, imageUrl);
+
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyDG02RhsyYpTkyLeBFxk6xMlH8pq3sPUXU",
