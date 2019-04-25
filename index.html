@@ -24,30 +24,40 @@
 <body>
 
         <div class="container">
-                <div class="jumbotron jumbotron-fluid text-center mt-3" style="background-color: rgb(172, 41, 41);">
+                <div class="jumbotron jumbotron-fluid text-center mt-3" >
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
-                                 <h2 class="display-4 font-weight-bold text-dark" id="heading">Any Time is Train Time</h2>
+                                 <h1 class="display-1 d-none d-md-block font-weight-bold" id="heading">TRAIN SCHEDULER</h1>
+                                 <h1 class="display-5 d-block d-md-none font-weight-bold" id="heading">TRAIN SCHEDULER</h1>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                 <h3 class="font-weight-bold text-dark"> Central Train Station</h3>
+                                 <h1 class="display-5 d-none d-md-block font-weight-bold text-white">LET THE TRAIN TAKE THE STRAIN</h1>
+                                 <h5 class="display-5 d-block d-md-none font-weight-bold text-white">LET THE TRAIN TAKE THE STRAIN</h5>
                             </div>
                         </div>
-                        
+                        <!-- <div class="row">
+                          <div class="col-12">
+                               <h3 class="font-weight-bold text-white" id="date-time"></h3>
+                          </div>
+                        </div> -->
                         
                     </div>
                 </div>
                   <div class="row">
-                      <div class="col-12 mb-3">
-                          <div class="card border-primary">
-                              <div class="card-header bg-primary">
-                                  <h5 class="card-title  text-white">Current Train Schedule</h5>  
+                      <div class="col-12 col-md-8 mb-3">
+                          <div class="card border-danger">
+                              <div class="card-header bg-danger">
+                                  <span class="h5 card-title text-white d-none d-sm-inline">CURRENT TRAIN SCHEDULE</span>
+                                  <span class="h5 date-time card-title text-white d-none d-sm-inline float-right"></span>
+
+                                  <span class="h6 card-title text-white d-inline d-sm-none">CURRENT TRAIN SCHEDULE</span>
+                                  <span class="h6 date-time card-title text-white d-inline d-sm-none float-right" ></span>
                               </div>
                               <div class="card-body">
-                                <table class="table">
+                                <table class="table table-responsive">
                                     <thead>
                                       <tr>
                                         
@@ -59,49 +69,19 @@
                                         
                                       </tr>
                                     </thead>
-                                    <tbody>
-                                      <tr>
-                                        
-                                        <td>Brightline</td>
-                                        <td>West Palm Beach</td>
-                                        <td>30</td>
-                                        <td>05:35 PM</td>
-                                        <td>10</td> 
-                                      </tr>
-                                      <tr>
-                                        
-                                        <td>Matrorail</td>
-                                        <td>Dadeland South</td>
-                                        <td>30</td>
-                                        <td>05:35 PM</td>
-                                        <td>10</td>
-                                      </tr>
-                                      <tr>
-                                        
-                                        <td>Tri Rail</td>
-                                        <td>Miami Airport</td>
-                                        <td>30</td>
-                                        <td>05:35 PM</td>
-                                        <td>10</td>
-                                      </tr>
-                                      <tr>
-                                        
-                                        <td>Amtrak</td>
-                                        <td>Orlando</td>
-                                        <td>30</td>
-                                        <td>05:35 PM</td>
-                                        <td>10</td>
-                                      </tr>
+                                    <!-- Train info goes here! -->
+					                          <tbody id="add-row">
                                     </tbody>
+                                    
                                   </table>
                               </div>
                               
                           </div>
                       </div>
-                      <div class="col-12">
-                            <div class="card border-primary">
-                                    <div class="card-header bg-primary">
-                                        <h5 class="card-title text-white">Add Train</h5>  
+                      <div class="col-12 col-md-4 mb-3">
+                            <div class="card border-danger">
+                                    <div class="card-header bg-danger">
+                                        <h5 class="card-title text-white">ADD A NEW TRAIN</h5>  
                                     </div>
                                     <div class="card-body">    
                                         <form class="form">
@@ -122,26 +102,12 @@
                                                     <input type="text" class="form-control" id="frec-input" placeholder="20">
                                             </div>
                                                 
-                                                <input class="btn btn-primary float-right" type="submit" id="add-train-btn" value="Submit"                       
-                                                                                    
+                                                <input class="btn btn-danger float-right" type="submit" id="add-train-btn" value="Submit"                                                                                  
                                         </form>
                                    </div>
                                     
                         </div>
-                                    <!-- Most Recent Member Card -->
-                        <div class="col-lg-6">
-                            <div class="card">
-                            <div class="card-header">
-                                Most Recent Member
-                            </div>
-                            <div class="card-body" id="recent-member">
-                                <h2 id="name-display">Jimmy John</h2>
-                                <h4 id="role-display">Email: jimmy@john.edu</h4>
-                                <h4 id="start-display">Age: 27</h4>
-                                <p id="rate">I'm signing up, because I want to spread sandwiches to the world.</p>
-                            </div>
-                            </div>
-                        </div>
+                        
                     </div>
                   </div>
             </div>

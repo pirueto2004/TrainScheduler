@@ -17,9 +17,9 @@
 }
 
 #heading {
-    color: #333333;
+    color: #f7f4f4;
     /* background: #FFFFFF; */
-    text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0,0,0,0.15);
-    color: #333333;
+    text-shadow: 3px 3px 0px rgb(233, 15, 15), 5px 4px 0px rgba(0,0,0,0.15);
+    color: #f7f4f4;
     /* background: #FFFFFF; */
     }
