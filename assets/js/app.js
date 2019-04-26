@@ -7,20 +7,37 @@ function setBackgroundImage(myObject, imageUrl) {
                  });
   }
 
-//   var body = $("body");
-//   var imageUrl = 'assets/images/bg-blue.jpg';
-//   setBackgroundImage(body, imageUrl);
+  function updateClock() {
+
+    var clock = moment().format("MM/DD/YY h:mm:ss a");
+    
+    $(".date-time").html(clock);
+      
+      // Get current time in seconds
+      var currentTimeSec = moment();
+      console.log("Current Time in seconds:" + moment(currentTimeSec).format("ss"));
+      if(moment(currentTimeSec).format("ss")==00)
+      {
+        // When current seconds=00
+          location.reload();
+      }
+    };
+    
 
 var jumbotron = $(".jumbotron");
 var imageUrl = 'assets/images/grant-czerwinski.jpg';
-var currentTime = moment().format("MM/DD/YY hh:mm A");
 
+//Gets the current time in "MM/DD/YY h:mm:ss" format
+var currentTime = moment().format("MM/DD/YY h:mm:ss a");
 
   $(document).ready(function(){
+
+    //Sets background of jumbotron to imageUrl
     setBackgroundImage(jumbotron, imageUrl);
     
-    $(".date-time").text(currentTime);
-
+    // $(".date-time").append(currentTime);
+    setInterval(updateClock, 1000);
+        
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyDG02RhsyYpTkyLeBFxk6xMlH8pq3sPUXU",
@@ -41,11 +58,9 @@ var currentTime = moment().format("MM/DD/YY hh:mm A");
     var trainDest;
     var firstTrain;
     var trainFrec = 0;
+    var key;
 
-   // Create an initial trainCount variable
-    var trainCount = 0;
-    var trainArray = JSON.parse(localStorage.getItem("trainList"));   
-
+  
     // Click Button changes what is stored in firebase
     $("#add-train-btn").on("click", function(event) {
         // Prevent the page from refreshing
@@ -70,21 +85,24 @@ var currentTime = moment().format("MM/DD/YY hh:mm A");
         // Pushes train data to the database
         database.ref().push(newTrain);
         alert("Train successfully added");
-        $("form")[0].reset();
-        // Clears the form
-        // $("#train-input").val("");
-        // $("#dest-input").val("");
-        // $("#time-input").val("");
-        // $("#frec-input").val("");
-    });
+        // $("form")[0].reset();
 
+        //Clears the form
+        $("form").reset();
+     });
 
+    //Create Firebase event for adding train info to the database and a row in the html when a user adds an entry
     database.ref().on("child_added", function(childSnapshot) {
         var nextArr;
         var minAway;
 
-        // Assumptions
-        // trainFrec = 3;
+        // Store everything into a variable.
+        trainName = childSnapshot.val().name;
+        trainDest = childSnapshot.val().dest;
+        firstTrain = childSnapshot.val().first;
+        trainFrec = childSnapshot.val().frec;
+        key = childSnapshot.key;
+        
 
         // First Time (pushed back 1 year to make sure it comes before current time)
         var firstTrainNew = moment(childSnapshot.val().first, "hh:mm").subtract(1, "years");
@@ -112,100 +130,34 @@ var currentTime = moment().format("MM/DD/YY hh:mm A");
         nextTrain = moment(nextTrain).format("hh:mm");      
         console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
 
-        $("#add-row").append("<tr><td>" + childSnapshot.val().name +
-                "</td><td>" + childSnapshot.val().dest +
-                "</td><td>" + childSnapshot.val().frec +
-                "</td><td>" + nextTrain + 
-                "</td><td>" + minAway + "</td></tr>");
+        //Append new row to the table with the new train input
+        var newRow = $("<tr>");
+        newRow.append($("<td>" + childSnapshot.val().name + "</td>"));
+        newRow.append($("<td>" + childSnapshot.val().dest + "</td>"));
+        newRow.append($("<td class='text-center'>" + childSnapshot.val().frec + "</td>"));
+        newRow.append($("<td class='text-center'>" + nextTrain + "</td>"));
+        newRow.append($("<td class='text-center'>" + minAway + "</td>"));
+        newRow.append($("<td class='text-center'><button class='delete btn btn-danger btn-xs' data-key='" + key + "'>X</button></td>"));
+        
+        $("#add-row").append(newRow);
+
+
+        //Delete rows
+        $(".delete").on("click", function (event) {
+        var r = confirm("Are you sure you want to Remove this train info from the database?");
+        if (r == true) {
+          keyref = $(this).attr("data-key");
+          console.log(keyref);
+          database.ref().child(keyref).remove();
+          window.location.reload();
+        } else {
+            
+        }
+        
+      });
 
             // Handle the errors
         }, function(errorObject) {
             console.log("Errors handled: " + errorObject.code);
     });
-        
-    // database.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
-    //     // Change the HTML to reflect
-    //     $("#name-display").html(snapshot.val().name);
-    //     $("#dest-display").html(snapshot.val().email);
-    //     $("#age-display").html(snapshot.val().age);
-    //     $("#comment-display").html(snapshot.val().comment);
-    // });
-       
-    
-
-        
-        
-
-        // var tableRow = $("<tr>").append(
-        // $("<td>").text(tempTrain),
-        // $("<td>").text(tempDest),
-        // $("<td>").text(tempFrec),
-        // $("<td>").text(tempNext),
-        // $("<td>").text(tempMin)
-        // );
-    });
-
-// Assume the following situations.
-
-    // (TEST 1)
-    // First Train of the Day is 3:00 AM
-    // Assume Train comes every 3 minutes.
-    // Assume the current time is 3:16 AM....
-    // What time would the next train be...? (Use your brain first)
-    // It would be 3:18 -- 2 minutes away
-
-    // (TEST 2)
-    // First Train of the Day is 3:00 AM
-    // Assume Train comes every 7 minutes.
-    // Assume the current time is 3:16 AM....
-    // What time would the next train be...? (Use your brain first)
-    // It would be 3:21 -- 5 minutes away
-
-
-    // ==========================================================
-
-    // Solved Mathematically
-    // Test case 1:
-    // 16 - 00 = 16
-    // 16 % 3 = 1 (Modulus is the remainder)
-    // 3 - 1 = 2 minutes away
-    // 2 + 3:16 = 3:18
-
-    // Solved Mathematically
-    // Test case 2:
-    // 16 - 00 = 16
-    // 16 % 7 = 2 (Modulus is the remainder)
-    // 7 - 2 = 5 minutes away
-    // 5 + 3:16 = 3:21
-
-    // // Assumptions
-    // var tFrequency = 3;
-
-    // // Time is 3:30 AM
-    // var firstTime = "03:30";
-
-    // // First Time (pushed back 1 year to make sure it comes before current time)
-    // var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
-    // console.log(firstTimeConverted);
-
-    // // Current Time
-    // var currentTime = moment();
-    // console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-
-    // // Difference between the times
-    // var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-    // console.log("DIFFERENCE IN TIME: " + diffTime);
-
-    // // Time apart (remainder)
-    // var tRemainder = diffTime % tFrequency;
-    // console.log(tRemainder);
-
-    // // Minute Until Train
-    // var tMinutesTillTrain = tFrequency - tRemainder;
-    // console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-
-    // // Next Train
-    // var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    // console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-
-//   });
+  });    

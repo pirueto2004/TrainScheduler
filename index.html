@@ -6,7 +6,7 @@
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+ 
   <title>Train Scheduler App</title>
 
   <!-- Bootstrap CSS -->
@@ -50,9 +50,10 @@
                       <div class="col-12 col-md-8 mb-3">
                           <div class="card border-danger">
                               <div class="card-header bg-danger">
+                                  <!-- These two elements will be displayed inline only on small "sm" devices and up -->
                                   <span class="h5 card-title text-white d-none d-sm-inline">CURRENT TRAIN SCHEDULE</span>
                                   <span class="h5 date-time card-title text-white d-none d-sm-inline float-right"></span>
-
+                                  <!-- These two elements will be displayed inline only on very small devices -->
                                   <span class="h6 card-title text-white d-inline d-sm-none">CURRENT TRAIN SCHEDULE</span>
                                   <span class="h6 date-time card-title text-white d-inline d-sm-none float-right" ></span>
                               </div>
@@ -61,12 +62,12 @@
                                     <thead>
                                       <tr>
                                         
-                                        <th scope="col" id="nameCol">Train Name</th>
-                                        <th scope="col" id="destCol">Destination</th>
-                                        <th scope="col" id="frecCol">Frecuency (min)</th>
-                                        <th scope="col" id="nextCol">Next Arrival</th>
-                                        <th scope="col" id="minCol">Minutes Away</th>
-                                        
+                                        <th  scope="col" id="nameCol">Train Name</th>
+                                        <th  scope="col" id="destCol">Destination</th>
+                                        <th  scope="col" id="frecCol">Frecuency(min)</th>
+                                        <th  scope="col" id="nextCol">Next Arrival</th>
+                                        <th  scope="col" id="minCol">Minutes Away</th>
+                                        <th scope="col" id="delCol">Delete</th>
                                       </tr>
                                     </thead>
                                     <!-- Train info goes here! -->
