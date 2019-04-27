@@ -1,3 +1,5 @@
+// FUNCTIONS
+// ============
 function setBackgroundImage(myObject, imageUrl) {
     myObject.css({
                  "background-image": "url(" + imageUrl + ")",
@@ -8,35 +10,50 @@ function setBackgroundImage(myObject, imageUrl) {
   }
 
   function updateClock() {
-
     var clock = moment().format("MM/DD/YY h:mm:ss a");
-    
-    $(".date-time").html(clock);
-      
-      // Get current time in seconds
+    $(".date-time").html(clock); 
+      // // Get current time in seconds
       var currentTimeSec = moment();
       console.log("Current Time in seconds:" + moment(currentTimeSec).format("ss"));
-      if(moment(currentTimeSec).format("ss")==00)
+      if(moment(currentTimeSec).format("ss") == 00)
       {
         // When current seconds=00
-          location.reload();
+          location.reload();     
       }
-    };
+  };
+
+  function resetForm() {
+    $("#train-input").val("");
+    $("#dest-input").val("");
+    $("#time-input").val("");
+    $("#freq-input").val("");
+  };
+
+    // GLOBAL VARIABLES
+    // ================
+
+    // Create a variable to reference the database
+    var database = firebase.database();
+
+    var trainName;
+    var trainDest;
+    var firstTrain;
+    var trainFrec = 0;
+    var key;
     
+    var jumbotron = $(".jumbotron");
+    var imageUrl = 'assets/images/grant-czerwinski.jpg';
 
-var jumbotron = $(".jumbotron");
-var imageUrl = 'assets/images/grant-czerwinski.jpg';
-
-//Gets the current time in "MM/DD/YY h:mm:ss" format
-var currentTime = moment().format("MM/DD/YY h:mm:ss a");
-
+  // MAIN PROCESS
+  // ============
   $(document).ready(function(){
-
+        
     //Sets background of jumbotron to imageUrl
     setBackgroundImage(jumbotron, imageUrl);
     
     // $(".date-time").append(currentTime);
     setInterval(updateClock, 1000);
+    
         
     // Initialize Firebase
     var config = {
@@ -49,17 +66,6 @@ var currentTime = moment().format("MM/DD/YY h:mm:ss a");
     };
     firebase.initializeApp(config);
 
-    // Create a variable to reference the database
-    var database = firebase.database();
-
-    // Initial Variables (SET the first set IN FIREBASE FIRST)
-    // Note remember to create these same variables in Firebase!
-    var trainName;
-    var trainDest;
-    var firstTrain;
-    var trainFrec = 0;
-    var key;
-
   
     // Click Button changes what is stored in firebase
     $("#add-train-btn").on("click", function(event) {
@@ -70,7 +76,7 @@ var currentTime = moment().format("MM/DD/YY h:mm:ss a");
         trainName = $("#train-input").val().trim();
         trainDest = $("#dest-input").val().trim();
         firstTrain = $("#time-input").val().trim();
-        trainFrec = $("#frec-input").val().trim();
+        trainFrec = $("#freq-input").val().trim();
         
 
         // Creates local "temporary" object for holding the train data
@@ -88,15 +94,13 @@ var currentTime = moment().format("MM/DD/YY h:mm:ss a");
         // $("form")[0].reset();
 
         //Clears the form
-        $("form").reset();
+        resetForm();
      });
 
     //Create Firebase event for adding train info to the database and a row in the html when a user adds an entry
     database.ref().on("child_added", function(childSnapshot) {
-        var nextArr;
-        var minAway;
-
-        // Store everything into a variable.
+        
+        //Firebase watcher + initial loader. Store everything into a variable.
         trainName = childSnapshot.val().name;
         trainDest = childSnapshot.val().dest;
         firstTrain = childSnapshot.val().first;
@@ -108,7 +112,10 @@ var currentTime = moment().format("MM/DD/YY h:mm:ss a");
         var firstTrainNew = moment(childSnapshot.val().first, "hh:mm").subtract(1, "years");
         console.log(firstTrainNew);
 
-        //Current Time
+        //determine Current Time
+        // var currentTime = moment();
+        //Gets the current time in "MM/DD/YY h:mm:ss" format
+         var currentTime = moment().format("MM/DD/YY h:mm:ss a");
         console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
         // Difference between the current and firstTrain
@@ -117,18 +124,18 @@ var currentTime = moment().format("MM/DD/YY h:mm:ss a");
 
         //Time apart (remainder)
         // var tRemainder = diffTime % tFrequency;
-        var tRemainder = diffTime % childSnapshot.val().frec;
+        var tRemainder = diffTime % trainFrec;
         console.log(tRemainder);
 
         // Minutes until next train
-        var minAway = childSnapshot.val().frec - tRemainder;
+        var minAway = trainFrec - tRemainder;
         console.log("MINUTES TILL TRAIN: " + minAway);
         
 
         // Next train time
         var nextTrain = moment().add(minAway, "minutes");
         nextTrain = moment(nextTrain).format("hh:mm");      
-        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+        console.log("ARRIVAL TIME: " + nextTrain);
 
         //Append new row to the table with the new train input
         var newRow = $("<tr>");
@@ -160,4 +167,6 @@ var currentTime = moment().format("MM/DD/YY h:mm:ss a");
         }, function(errorObject) {
             console.log("Errors handled: " + errorObject.code);
     });
+     
+
   });    
