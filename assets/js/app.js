@@ -32,9 +32,6 @@ function setBackgroundImage(myObject, imageUrl) {
     // GLOBAL VARIABLES
     // ================
 
-    // Create a variable to reference the database
-    var database = firebase.database();
-
     var trainName;
     var trainDest;
     var firstTrain;
@@ -66,7 +63,9 @@ function setBackgroundImage(myObject, imageUrl) {
     };
     firebase.initializeApp(config);
 
-  
+      // Create a variable to reference the database
+      var database = firebase.database();
+
     // Click Button changes what is stored in firebase
     $("#add-train-btn").on("click", function(event) {
         // Prevent the page from refreshing
@@ -91,8 +90,7 @@ function setBackgroundImage(myObject, imageUrl) {
         // Pushes train data to the database
         database.ref().push(newTrain);
         alert("Train successfully added");
-        // $("form")[0].reset();
-
+        
         //Clears the form
         resetForm();
      });
@@ -134,7 +132,7 @@ function setBackgroundImage(myObject, imageUrl) {
 
         // Next train time
         var nextTrain = moment().add(minAway, "minutes");
-        nextTrain = moment(nextTrain).format("hh:mm");      
+        nextTrain = moment(nextTrain).format("hh:mm a");      
         console.log("ARRIVAL TIME: " + nextTrain);
 
         //Append new row to the table with the new train input
